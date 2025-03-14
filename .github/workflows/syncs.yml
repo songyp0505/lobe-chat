@@ -1,5 +1,10 @@
 name: Sync The Upstream
 
+permissions:
+  contents: write  # 覆盖工作流文件
+  issues: write
+  actions: write
+
 on:
   schedule:
     - cron: "0 0 * * *"  # 每天 UTC 0 点自动同步
