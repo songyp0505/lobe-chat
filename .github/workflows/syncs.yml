@@ -1,0 +1,29 @@
+name: Sync The Upstream
+
+on:
+  schedule:
+    - cron: "0 0 * * *"  # 每天 UTC 0 点自动同步
+  workflow_dispatch:      # 允许手动触发
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 获取完整 Git 历史
+
+      - name: Add Upstream
+        run: |
+          git remote add upstream https://github.com/lobehub/lobe-chat.git
+          git fetch upstream
+
+      - name: Merge Changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git merge upstream/main --no-edit  # 自动合并，跳过编辑信息
+
+      - name: Push Updates
+        run: git push origin main
