@@ -4,6 +4,7 @@ permissions:
   contents: write  # 覆盖工作流文件
   issues: write
   actions: write
+  workflows: write
 
 on:
   schedule:
